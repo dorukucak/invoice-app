@@ -834,11 +834,11 @@ function Billing() {
                       </Descriptions>
                     </div>
                     <div className="col-action">
-                      <Button type="link" danger>
-                        {deletebtn}DELETE
+                      <Button type="link" danger disabled>
+                        {deletebtn}SİL
                       </Button>
-                      <Button type="link" className="darkbtn">
-                        {pencil} EDIT
+                      <Button type="link" disabled>
+                        {pencil} DÜZENLE
                       </Button>
                     </div>
                   </Card>
@@ -854,7 +854,7 @@ function Billing() {
             className="header-solid h-full  ant-list-yes"
             title={
               <h6 key="transaction-title" className="font-semibold m-0">
-                Your Transactions
+                Hesap Hareketleri
               </h6>
             }
             /*   extra={
@@ -864,6 +864,7 @@ function Billing() {
               </p>
             } */
           >
+            <List></List>
             {/*  <List
               header={<h6 key="newest-header">NEWEST</h6>}
               className="transactions-list ant-newest"

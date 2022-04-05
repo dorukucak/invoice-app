@@ -10,7 +10,7 @@
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 import {
   Row,
@@ -21,24 +21,24 @@ import {
   Button,
   List,
   Avatar,
-  Input,
-  Drawer,
+  Input /* 
+  Drawer, ,
   Typography,
-  Switch,
-} from "antd";
+    Switch, */,
+} from 'antd';
 
 import {
   SearchOutlined,
-  StarOutlined,
+  /*   StarOutlined,
   TwitterOutlined,
-  FacebookFilled,
-} from "@ant-design/icons";
+  FacebookFilled, */
+} from '@ant-design/icons';
 
-import { NavLink, Link } from "react-router-dom";
-import styled from "styled-components";
-import avtar from "../../assets/images/team-2.jpg";
+import { NavLink, Link } from 'react-router-dom';
+/* import styled from 'styled-components'; */
+import avtar from '../../assets/images/team-2.jpg';
 
-const ButtonContainer = styled.div`
+/* const ButtonContainer = styled.div`
   .ant-btn-primary {
     background-color: #1890ff;
   }
@@ -57,7 +57,7 @@ const ButtonContainer = styled.div`
   .ant-switch-active {
     background-color: #1890ff;
   }
-`;
+`; */
 
 const bell = [
   <svg
@@ -147,19 +147,19 @@ const clockicon = [
 
 const data = [
   {
-    title: "New message from Sophie",
+    title: 'New message from Sophie',
     description: <>{clockicon} 2 days ago</>,
 
     avatar: avtar,
   },
   {
-    title: "New album by Travis Scott",
+    title: 'New album by Travis Scott',
     description: <>{clockicon} 2 days ago</>,
 
     avatar: <Avatar shape="square">{wifi}</Avatar>,
   },
   {
-    title: "Payment completed",
+    title: 'Payment completed',
     description: <>{clockicon} 2 days ago</>,
     avatar: <Avatar shape="square">{credit}</Avatar>,
   },
@@ -219,7 +219,7 @@ const profile = [
   </svg>,
 ];
 
-const toggler = [
+/* const toggler = [
   <svg
     width="20"
     height="20"
@@ -247,7 +247,7 @@ const setting = [
       fill="#111827"
     ></path>
   </svg>,
-];
+]; */
 
 function Header({
   placement,
@@ -258,43 +258,43 @@ function Header({
   handleSidenavType,
   handleFixedNavbar,
 }) {
-  const { Title, Text } = Typography;
+  /*   const { Title, Text } = Typography; */
 
-  const [visible, setVisible] = useState(false);
-  const [sidenavType, setSidenavType] = useState("transparent");
+  const [, /* visible */ setVisible] = useState(false);
+  /*  const [sidenavType, setSidenavType] = useState('transparent'); */
 
   useEffect(() => window.scrollTo(0, 0));
 
   const showDrawer = () => setVisible(true);
-  const hideDrawer = () => setVisible(false);
+  // const hideDrawer = () => setVisible(false);
 
   return (
     <>
-      <div className="setting-drwer" onClick={showDrawer}>
+      {/* <div className="setting-drwer" onClick={showDrawer}>
         {setting}
-      </div>
+      </div> */}
       <Row gutter={[24, 0]}>
         <Col span={24} md={6}>
           <Breadcrumb>
             <Breadcrumb.Item>
               <NavLink to="/">Pages</NavLink>
             </Breadcrumb.Item>
-            <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
-              {name.replace("/", "")}
+            <Breadcrumb.Item style={{ textTransform: 'capitalize' }}>
+              {name.replace('/', '')}
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="ant-page-header-heading">
             <span
               className="ant-page-header-heading-title"
-              style={{ textTransform: "capitalize" }}
+              style={{ textTransform: 'capitalize' }}
             >
-              {subName.replace("/", "")}
+              {subName.replace('/', '')}
             </span>
           </div>
         </Col>
         <Col span={24} md={18} className="header-control">
           <Badge size="small" count={4}>
-            <Dropdown overlay={menu} trigger={["click"]}>
+            <Dropdown overlay={menu} trigger={['click']}>
               <a
                 href="#pablo"
                 className="ant-dropdown-link"
@@ -307,7 +307,7 @@ function Header({
           <Button type="link" onClick={showDrawer}>
             {logsetting}
           </Button>
-          <Button
+          {/* <Button
             type="link"
             className="sidebar-toggler"
             onClick={() => onPress()}
@@ -420,7 +420,7 @@ function Header({
                 </div>
               </div>
             </div>
-          </Drawer>
+          </Drawer> */}
           <Link to="/sign-in" className="btn-sign-in">
             {profile}
             <span>Sign in</span>

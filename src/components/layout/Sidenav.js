@@ -11,7 +11,7 @@
 */
 
 // import { useState } from "react";
-import { Menu, Button } from 'antd';
+import { Menu /* Button */ } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 
@@ -19,7 +19,7 @@ function Sidenav({ color }) {
   const { pathname } = useLocation();
   const page = pathname.replace('/', '');
 
-  const dashboard = [
+  /* const dashboard = [
     <svg
       width="20"
       height="20"
@@ -40,9 +40,9 @@ function Sidenav({ color }) {
         fill={color}
       ></path>
     </svg>,
-  ];
+  ]; */
 
-  const tables = [
+  /* const tables = [
     <svg
       width="20"
       height="20"
@@ -62,7 +62,7 @@ function Sidenav({ color }) {
         fill={color}
       ></path>
     </svg>,
-  ];
+  ]; */
 
   const billing = [
     <svg
@@ -86,7 +86,7 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-  const rtl = [
+  /* const rtl = [
     <svg
       width="20"
       height="20"
@@ -102,9 +102,9 @@ function Sidenav({ color }) {
         fill={color}
       ></path>
     </svg>,
-  ];
+  ]; */
 
-  const profile = [
+  /* const profile = [
     <svg
       width="20"
       height="20"
@@ -120,9 +120,9 @@ function Sidenav({ color }) {
         fill={color}
       ></path>
     </svg>,
-  ];
+  ]; */
 
-  const signin = [
+  /* const signin = [
     <svg
       width="20"
       height="20"
@@ -138,9 +138,9 @@ function Sidenav({ color }) {
         fill={color}
       ></path>
     </svg>,
-  ];
+  ]; */
 
-  const signup = [
+  /*  const signup = [
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="14"
@@ -158,7 +158,7 @@ function Sidenav({ color }) {
         fill={color}
       />
     </svg>,
-  ];
+  ]; */
 
   return (
     <>

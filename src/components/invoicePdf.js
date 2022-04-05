@@ -5,8 +5,14 @@ const printInvoice = (invoiceData) => {
     verticalOffset = 5,
     tableOffset = 10;
 
-  const { clientName, date, clientAddress, listData, totalAmount } =
-    invoiceData;
+  const { clientName, date, clientAddress, listData } = invoiceData;
+
+  const subTotal = listData.reduce(
+    (subTotal, row) => subTotal + row.amount * row.price,
+    0
+  );
+
+  const total = subTotal;
 
   doc.setFontSize(10);
   // Mucahit info
@@ -48,7 +54,6 @@ const printInvoice = (invoiceData) => {
   doc.text(clientAddress.postCode, verticalOffset + 20, 99);
 
   // table
-
   doc
     .setFont(undefined, 'bold')
     .text('Weight', verticalOffset + tableOffset + 110, 110)
@@ -57,7 +62,7 @@ const printInvoice = (invoiceData) => {
     .setFont(undefined, 'normal');
 
   listData.map((row, index) => {
-    doc
+    return doc
       .text(row.product, verticalOffset + 20, 120 + index * 7)
       .text(
         `${row.amount} kg`,
@@ -73,7 +78,7 @@ const printInvoice = (invoiceData) => {
         120 + index * 7
       )
       .text(
-        `${row.total.toLocaleString('en-EN', {
+        `${(row.price * row.amount).toLocaleString('en-EN', {
           style: 'currency',
           currency: 'GBP',
         })}`,
@@ -84,7 +89,7 @@ const printInvoice = (invoiceData) => {
 
   // summary
   doc.text('Sub total', verticalOffset + 20, 180).text(
-    `${totalAmount.toLocaleString('en-EN', {
+    `${subTotal.toLocaleString('en-EN', {
       style: 'currency',
       currency: 'GBP',
     })}`,
@@ -93,9 +98,9 @@ const printInvoice = (invoiceData) => {
   );
   doc
     .text('Balance', verticalOffset + 20, 190)
-    .text(`£      -`, verticalOffset + tableOffset + 150, 190);
+    .text(`£         -`, verticalOffset + tableOffset + 150, 190);
   doc.text('Total', verticalOffset + 20, 200).text(
-    `${totalAmount.toLocaleString('en-EN', {
+    `${total.toLocaleString('en-EN', {
       style: 'currency',
       currency: 'GBP',
     })}`,
@@ -104,7 +109,6 @@ const printInvoice = (invoiceData) => {
   );
 
   // footer
-
   doc
     .text('Make all cheques payable to:', verticalOffset + 20, 220)
     .text('Mucahit Meat Ltd.', verticalOffset + 20, 225);
@@ -113,7 +117,10 @@ const printInvoice = (invoiceData) => {
     .setFont(undefined, 'bold')
     .text('Thank you for your business', verticalOffset + 20, 235);
 
+  // save and print
   doc.save(`${clientName}-${date}.pdf`);
+  doc.autoPrint();
+  doc.output('dataurlnewwindow');
 };
 
 export default printInvoice;

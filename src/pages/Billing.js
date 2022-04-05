@@ -11,64 +11,34 @@
 */
 import React, { useState, useEffect, useRef } from 'react';
 
-import moment from 'moment';
-
 import {
   Row,
   Col,
   Card,
-  Statistic,
+  /*  Statistic, */
   Button,
   List,
   Descriptions,
-  Avatar,
+  /*  Avatar, */
   Form,
   Input,
+  InputNumber,
   Select,
   DatePicker,
   Table,
-  Space,
+  /*   Space, */
   Typography,
   Popconfirm,
 } from 'antd';
 
-import { PlusOutlined, ExclamationOutlined } from '@ant-design/icons';
+/* import { PlusOutlined, ExclamationOutlined } from '@ant-design/icons'; */
 
 import printInvoice from '../components/invoicePdf';
+import clients from '../api/clients';
 
 import './billing.css';
 
 const { Option } = Select;
-
-const clients = [
-  {
-    id: 0,
-    name: 'Taylan 2015 Ltd.',
-    address: {
-      street: '1 Guithavon Street',
-      city: 'Witham',
-      postCode: 'CM8 1BJ',
-    },
-  },
-  {
-    id: 1,
-    name: 'Lokkanta Mey.',
-    address: {
-      street: '31 Westbourne Grove',
-      city: 'London',
-      postCode: 'W2 4UA',
-    },
-  },
-  {
-    id: 2,
-    name: 'Pala 5051 Ltd.',
-    address: {
-      street: '156 St. Albans Road',
-      city: 'London',
-      postCode: 'WD24 4FT',
-    },
-  },
-];
 
 const EditableCell = ({
   editing,
@@ -80,7 +50,12 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = <Input style={{ margin: 0, padding: 0, height: 30 }} />;
+  const inputNode =
+    inputType === 'number' ? (
+      <InputNumber />
+    ) : (
+      <Input style={{ margin: 0, padding: 0, height: 30 }} />
+    );
   return (
     <td {...restProps}>
       {editing ? (
@@ -107,7 +82,7 @@ const EditableCell = ({
 };
 
 const dataSource = [
-  {
+  /*  {
     key: 'Chk Fillet',
     product: 'Chk Fillet',
     amount: 80,
@@ -120,7 +95,7 @@ const dataSource = [
     amount: 42,
     price: 20.5,
     total: 861.0,
-  },
+  }, */
 ];
 
 function Billing() {
@@ -136,7 +111,7 @@ function Billing() {
   const amountRef = useRef(null);
   const priceRef = useRef(null);
 
-  const datam = [
+  /*  const datam = [
     {
       title: 'March, 01, 2021',
       description: '#MS-415646',
@@ -262,7 +237,7 @@ function Billing() {
         ></path>
       </g>
     </svg>,
-  ];
+  ]; */
 
   const pencil = [
     <svg
@@ -319,7 +294,7 @@ function Billing() {
     </svg>,
   ];
 
-  const information = [
+  /*  const information = [
     {
       title: 'Taylan',
       description: 'Viking Burrito',
@@ -355,8 +330,8 @@ function Billing() {
         className="fill-muted"
       ></path>
     </svg>,
-  ];
-  const mins = [
+  ]; */
+  /*  const mins = [
     <svg
       width="10"
       height="10"
@@ -372,8 +347,8 @@ function Billing() {
         className="fill-danger"
       ></path>
     </svg>,
-  ];
-  const newest = [
+  ]; */
+  /* const newest = [
     {
       headding: <h6>NEWEST</h6>,
       avatar: mins,
@@ -425,7 +400,7 @@ function Billing() {
       textclass: 'text-warning',
       amountcolor: 'text-warning-b',
     },
-  ];
+  ]; */
 
   const columns = [
     {
@@ -448,6 +423,11 @@ function Billing() {
       key: 'price',
       editable: true,
       width: '10%',
+      render: (data) =>
+        data.toLocaleString('en-EN', {
+          style: 'currency',
+          currency: 'GBP',
+        }),
     },
     {
       title: 'Tutar',
@@ -488,7 +468,7 @@ function Billing() {
               onConfirm={() => erase(record.key)}
               onBlur={() => cancelEdit()}
             >
-              <a>Sil</a>
+              Sil
             </Popconfirm>
           </span>
         ) : (
@@ -513,7 +493,7 @@ function Billing() {
       listData: data,
       totalAmount: data.reduce((total, val) => val.total + total, 0),
     });
-  }, [date, data]);
+  }, [date, data, selectedClient]);
 
   console.log(invoiceData);
 
@@ -546,6 +526,7 @@ function Billing() {
   const save = async (key) => {
     try {
       const row = await form.validateFields();
+      console.log(row);
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
 
@@ -583,7 +564,7 @@ function Billing() {
       ...col,
       onCell: (record) => ({
         record,
-        inputType: 'number',
+        inputType: col.dataIndex === 'product' ? 'text' : 'number',
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
@@ -600,6 +581,7 @@ function Billing() {
     amountRef.current.input.value = null;
     priceRef.current.input.value = null;
     formAdd.resetFields();
+    productRef.current.focus();
   };
   console.log(data);
   return (

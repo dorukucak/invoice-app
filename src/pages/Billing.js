@@ -9,7 +9,7 @@
   =========================================================
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
 import {
   Row,
@@ -29,14 +29,14 @@ import {
   /*   Space, */
   Typography,
   Popconfirm,
-} from 'antd';
+} from "antd";
 
 /* import { PlusOutlined, ExclamationOutlined } from '@ant-design/icons'; */
 
-import printInvoice from '../components/invoicePdf';
-import clients from '../api/clients';
+import printInvoice from "../components/invoicePdf";
+import clients from "../api/clients";
 
-import './billing.css';
+import "./billing.css";
 
 const { Option } = Select;
 
@@ -51,7 +51,7 @@ const EditableCell = ({
   ...restProps
 }) => {
   const inputNode =
-    inputType === 'number' ? (
+    inputType === "number" ? (
       <InputNumber />
     ) : (
       <Input style={{ margin: 0, padding: 0, height: 30 }} />
@@ -102,7 +102,7 @@ function Billing() {
   const [invoiceData, setInvoiceData] = useState({});
   const [selectedClient, setSelectedClient] = useState(null);
   const [date, setDate] = useState(null);
-  const [editingKey, setEditingKey] = useState('');
+  const [editingKey, setEditingKey] = useState("");
   const [data, setData] = useState(dataSource);
   const [formAdd] = Form.useForm();
   const [form] = Form.useForm();
@@ -404,45 +404,45 @@ function Billing() {
 
   const columns = [
     {
-      title: 'Ürün',
-      dataIndex: 'product',
-      key: 'product',
+      title: "Product",
+      dataIndex: "product",
+      key: "product",
       editable: true,
-      width: '30%',
+      width: "30%",
     },
     {
-      title: 'Kilo',
-      dataIndex: 'amount',
-      key: 'amount',
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
       editable: true,
-      width: '15%',
+      width: "15%",
     },
     {
-      title: 'Birim Fiyat',
-      dataIndex: 'price',
-      key: 'price',
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
       editable: true,
-      width: '10%',
+      width: "10%",
       render: (data) =>
-        data.toLocaleString('en-EN', {
-          style: 'currency',
-          currency: 'GBP',
+        data.toLocaleString("en-EN", {
+          style: "currency",
+          currency: "GBP",
         }),
     },
     {
-      title: 'Tutar',
-      dataIndex: 'total',
-      key: 'total',
+      title: "Total",
+      dataIndex: "total",
+      key: "total",
       render: (_, record) =>
-        (record.amount * record.price).toLocaleString('en-EN', {
-          style: 'currency',
-          currency: 'GBP',
+        (record.amount * record.price).toLocaleString("en-EN", {
+          style: "currency",
+          currency: "GBP",
         }),
       editable: false,
-      width: '10%',
+      width: "10%",
     },
     {
-      title: '',
+      title: "",
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
@@ -453,7 +453,7 @@ function Billing() {
               }}
               onClick={() => save(record.key)}
             >
-              Kaydet
+              Save
             </Typography.Link>
             <Typography.Link
               onClick={() => cancelEdit()}
@@ -461,27 +461,27 @@ function Billing() {
                 marginRight: 10,
               }}
             >
-              İptal
+              Cancel
             </Typography.Link>
             <Popconfirm
               title="Sure to erase?"
               onConfirm={() => erase(record.key)}
               onBlur={() => cancelEdit()}
             >
-              Sil
+              Delete
             </Popconfirm>
           </span>
         ) : (
           <Typography.Link
-            disabled={editingKey !== ''}
+            disabled={editingKey !== ""}
             onClick={() => edit(record)}
             style={{ margin: 0 }}
           >
-            Düzenle
+            Edit
           </Typography.Link>
         );
       },
-      width: '20%',
+      width: "20%",
     },
   ];
 
@@ -495,27 +495,24 @@ function Billing() {
     });
   }, [date, data, selectedClient]);
 
-  console.log(invoiceData);
-
   const handleSaveInvoice = async (e) => {
     e.preventDefault();
     if (clients[selectedClient]?.name && date) {
       printInvoice(invoiceData);
-      console.log('invoiceData:', invoiceData);
     } else {
-      alert('Müşteri ve tarih girin');
+      alert("Müşteri ve tarih girin");
     }
   };
 
   const cancelEdit = () => {
-    setEditingKey('');
+    setEditingKey("");
   };
 
   const edit = (record) => {
     form.setFieldsValue({
-      product: '',
-      amount: '',
-      price: '',
+      product: "",
+      amount: "",
+      price: "",
       ...record,
     });
     setEditingKey(record.key);
@@ -526,7 +523,6 @@ function Billing() {
   const save = async (key) => {
     try {
       const row = await form.validateFields();
-      console.log(row);
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
 
@@ -534,15 +530,13 @@ function Billing() {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
         setData(newData);
-        setEditingKey('');
+        setEditingKey("");
       } else {
         newData.push(row);
         setData(newData);
-        setEditingKey('');
+        setEditingKey("");
       }
-    } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
-    }
+    } catch (errInfo) {}
   };
 
   const erase = (key) => {
@@ -552,7 +546,7 @@ function Billing() {
       }
     }
 
-    setEditingKey('');
+    setEditingKey("");
   };
 
   const mergedColumns = columns.map((col) => {
@@ -564,7 +558,7 @@ function Billing() {
       ...col,
       onCell: (record) => ({
         record,
-        inputType: col.dataIndex === 'product' ? 'text' : 'number',
+        inputType: col.dataIndex === "product" ? "text" : "number",
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
@@ -572,8 +566,6 @@ function Billing() {
       }),
     };
   });
-
-  console.log(date);
 
   const onSubmit = (formVal) => {
     setData([...data, formVal]);
@@ -583,7 +575,6 @@ function Billing() {
     formAdd.resetFields();
     productRef.current.focus();
   };
-  console.log(data);
   return (
     <>
       <Row gutter={[24, 0]}>
@@ -599,14 +590,14 @@ function Billing() {
                       className="ant-row-flex ant-row-flex-middle"
                     >
                       <Col xs={24} md={12}>
-                        <h6 className="font-semibold m-0">Fatura Ekle</h6>
+                        <h6 className="font-semibold m-0">Create Invoice</h6>
                       </Col>
                       <Col xs={24} md={12} className="d-flex">
                         <Button
                           type="primary"
                           onClick={(e) => handleSaveInvoice(e)}
                         >
-                          FATURAYI KAYDET
+                          SAVE AND PRINT
                         </Button>
                       </Col>
                     </Row>
@@ -615,14 +606,15 @@ function Billing() {
               >
                 <Form
                   form={formAdd}
+                  data-testid="form"
                   onFinish={async () => {
                     await formAdd.validateFields([
-                      'product',
-                      'amount',
-                      'price',
+                      "product",
+                      "amount",
+                      "price",
                     ]);
                     onSubmit({
-                      key: productRef.current.input.value,
+                      key: productRef.current?.input.value,
                       product: productRef.current.input.value,
                       amount: amountRef.current.input.value * 1,
                       price: priceRef.current.input.value * 1,
@@ -638,14 +630,16 @@ function Billing() {
                         rules={[
                           {
                             required: true,
-                            message: 'Bir müşteri seçin',
+                            message: "Bir müşteri seçin",
                           },
                         ]}
                       >
                         <Select
                           size="large"
-                          style={{ width: '100%' }}
-                          placeholder="Müşteri Seç"
+                          data-testid="select-client"
+                          name="select-client"
+                          style={{ width: "100%" }}
+                          placeholder="Select Customer"
                           onChange={(val) => setSelectedClient(val)}
                         >
                           {clients.map((client, i) => (
@@ -661,14 +655,14 @@ function Billing() {
                         rules={[
                           {
                             required: true,
-                            message: 'Bir tarih seçin',
+                            message: "Bir tarih seçin",
                           },
                         ]}
                       >
                         <DatePicker
                           size="large"
-                          style={{ width: '100%' }}
-                          placeholder="Tarih"
+                          style={{ width: "100%" }}
+                          placeholder="Pick a date"
                           format="DD/MM/YYYY"
                           onChange={(date, dateString) => setDate(dateString)}
                         />
@@ -680,22 +674,22 @@ function Billing() {
                     <Col>
                       <Form.Item
                         name="product"
-                        rules={[{ required: true, message: 'Bir ürün girin' }]}
+                        rules={[
+                          { required: true, message: "Enter product name" },
+                        ]}
                       >
-                        <Input ref={productRef} placeholder="Mal" />
+                        <Input ref={productRef} placeholder="Product" />
                       </Form.Item>
                     </Col>
                     <Col>
                       <Form.Item
                         name="amount"
-                        rules={[
-                          { required: true, message: 'Bir miktar girin' },
-                        ]}
+                        rules={[{ required: true, message: "Enter amount" }]}
                       >
                         <Input
                           ref={amountRef}
                           type="number"
-                          placeholder="Kilo"
+                          placeholder="Amount"
                           step={0.01}
                         />
                       </Form.Item>
@@ -703,14 +697,12 @@ function Billing() {
                     <Col>
                       <Form.Item
                         name="price"
-                        rules={[
-                          { required: true, message: 'Bir birim fiyat girin' },
-                        ]}
+                        rules={[{ required: true, message: "Enter price" }]}
                       >
                         <Input
                           ref={priceRef}
                           type="number"
-                          placeholder="Fiyat"
+                          placeholder="Price"
                           step={0.01}
                         />
                       </Form.Item>
@@ -718,55 +710,61 @@ function Billing() {
                     <Col>
                       <Button
                         htmlType="submit"
+                        name="button-add"
                         type="primary"
                         style={{ width: 140 }}
                       >
-                        EKLE
+                        ADD
                       </Button>
                     </Col>
                   </Row>
                 </Form>
                 <Row>
-                  <Card style={{ margin: '10px 0', width: '100%' }}>
-                    <Form form={form} component={false}>
-                      <Table
-                        components={{
-                          body: {
-                            cell: EditableCell,
-                          },
-                        }}
-                        summary={(data) => {
-                          let total = 0;
-                          data.forEach((value) => {
-                            total += value.amount * value.price;
-                          });
+                  <Card style={{ margin: "10px 0", width: "100%" }}>
+                    <div data-testid="form-2">
+                      <Form form={form} component={false}>
+                        <Table
+                          data-testid="add-remove-table"
+                          components={{
+                            body: {
+                              cell: EditableCell,
+                            },
+                          }}
+                          summary={(data) => {
+                            let total = 0;
+                            data.forEach((value) => {
+                              total += value.amount * value.price;
+                            });
 
-                          return (
-                            <>
-                              <Table.Summary.Row
-                                index={1}
-                                style={{ fontWeight: 'bold' }}
-                              >
-                                <Table.Summary.Cell>Toplam:</Table.Summary.Cell>
-                                <Table.Summary.Cell></Table.Summary.Cell>
-                                <Table.Summary.Cell></Table.Summary.Cell>
-                                <Table.Summary.Cell>
-                                  {total.toLocaleString('en-EN', {
-                                    style: 'currency',
-                                    currency: 'GBP',
-                                  })}
-                                </Table.Summary.Cell>
-                                <Table.Summary.Cell></Table.Summary.Cell>
-                              </Table.Summary.Row>
-                            </>
-                          );
-                        }}
-                        dataSource={data}
-                        columns={mergedColumns}
-                        style={{ width: '100%' }}
-                        pagination={false}
-                      />
-                    </Form>
+                            return (
+                              <>
+                                <Table.Summary.Row
+                                  index={1}
+                                  style={{ fontWeight: "bold" }}
+                                >
+                                  <Table.Summary.Cell>
+                                    Grand total:
+                                  </Table.Summary.Cell>
+                                  <Table.Summary.Cell></Table.Summary.Cell>
+                                  <Table.Summary.Cell></Table.Summary.Cell>
+                                  <Table.Summary.Cell>
+                                    {total.toLocaleString("en-EN", {
+                                      style: "currency",
+                                      currency: "GBP",
+                                    })}
+                                  </Table.Summary.Cell>
+                                  <Table.Summary.Cell></Table.Summary.Cell>
+                                </Table.Summary.Row>
+                              </>
+                            );
+                          }}
+                          dataSource={data}
+                          columns={mergedColumns}
+                          style={{ width: "100%" }}
+                          pagination={false}
+                        />
+                      </Form>
+                    </div>
                   </Card>
                 </Row>
               </Card>
@@ -779,12 +777,12 @@ function Billing() {
             className="header-solid h-full ant-invoice-card"
             title={[
               <h6 key="invoice-title" className="font-semibold m-0">
-                Faturalar
+                Invoices
               </h6>,
             ]}
             extra={[
               <Button key="view-all-button" type="primary" disabled>
-                <span>Tümünü Gör</span>
+                <span>View all</span>
               </Button>,
             ]}
           >
@@ -814,10 +812,10 @@ function Billing() {
             bordered={false}
             title={[
               <h6 key="billing-title" className="font-semibold m-0">
-                Fatura Bilgileri
+                Invoice Details
               </h6>,
             ]}
-            bodyStyle={{ paddingTop: '0' }}
+            bodyStyle={{ paddingTop: "0" }}
           >
             <Row gutter={[24, 24]}>
               {clients.map((client, index) => (
@@ -835,10 +833,10 @@ function Billing() {
                     </div>
                     <div className="col-action">
                       <Button type="link" danger disabled>
-                        {deletebtn}SİL
+                        {deletebtn}ERASE
                       </Button>
                       <Button type="link" disabled>
-                        {pencil} DÜZENLE
+                        {pencil} EDIT
                       </Button>
                     </div>
                   </Card>
@@ -854,7 +852,7 @@ function Billing() {
             className="header-solid h-full  ant-list-yes"
             title={
               <h6 key="transaction-title" className="font-semibold m-0">
-                Hesap Hareketleri
+                Transactions
               </h6>
             }
             /*   extra={

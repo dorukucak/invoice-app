@@ -10,7 +10,7 @@
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 import {
   Row,
@@ -25,18 +25,18 @@ import {
   Drawer, ,
   Typography,
     Switch, */,
-} from 'antd';
+} from "antd";
 
 import {
   SearchOutlined,
   /*   StarOutlined,
   TwitterOutlined,
   FacebookFilled, */
-} from '@ant-design/icons';
+} from "@ant-design/icons";
 
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link } from "react-router-dom";
 /* import styled from 'styled-components'; */
-import avtar from '../../assets/images/team-2.jpg';
+import avtar from "../../assets/images/team-2.jpg";
 
 /* const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -147,19 +147,19 @@ const clockicon = [
 
 const data = [
   {
-    title: 'New message from Sophie',
+    title: "New message from Sophie",
     description: <>{clockicon} 2 days ago</>,
 
     avatar: avtar,
   },
   {
-    title: 'New album by Travis Scott',
+    title: "New album by Travis Scott",
     description: <>{clockicon} 2 days ago</>,
 
     avatar: <Avatar shape="square">{wifi}</Avatar>,
   },
   {
-    title: 'Payment completed',
+    title: "Payment completed",
     description: <>{clockicon} 2 days ago</>,
     avatar: <Avatar shape="square">{credit}</Avatar>,
   },
@@ -279,22 +279,22 @@ function Header({
             <Breadcrumb.Item>
               <NavLink to="/">Pages</NavLink>
             </Breadcrumb.Item>
-            <Breadcrumb.Item style={{ textTransform: 'capitalize' }}>
-              {name.replace('/', '')}
+            <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
+              {name.replace("/", "")}
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="ant-page-header-heading">
             <span
               className="ant-page-header-heading-title"
-              style={{ textTransform: 'capitalize' }}
+              style={{ textTransform: "capitalize" }}
             >
-              {subName.replace('/', '')}
+              {subName.replace("/", "")}
             </span>
           </div>
         </Col>
         <Col span={24} md={18} className="header-control">
           <Badge size="small" count={4}>
-            <Dropdown overlay={menu} trigger={['click']}>
+            <Dropdown overlay={menu} trigger={["click"]}>
               <a
                 href="#pablo"
                 className="ant-dropdown-link"
@@ -423,7 +423,7 @@ function Header({
           </Drawer> */}
           <Link to="/sign-in" className="btn-sign-in">
             {profile}
-            <span>Sign in</span>
+            <span>Mucahit Meat Ltd.</span>
           </Link>
           <Input
             className="header-search"
